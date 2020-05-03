@@ -105,6 +105,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun placeObject(fragment: ArFragment, anchor: Anchor, model:Uri){
+        ModelRenderable.builder()
+            .setSource(fragment.context, model)
+            .build()
+            .thenAccept{
+                addNodeToScene(fragment, anchor, it)
+            }
+            .exceptionally {
+                Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT).show()
+                return@exceptionally null
+            }
+    }
+
+
+
 
 
 }
