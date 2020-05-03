@@ -75,17 +75,16 @@ class MainActivity : AppCompatActivity() {
         return wasHitting != isHitting
     }
 
-    // Makes use of ARCore's camera state and returns true if the tracking state has changed
     private fun updateTracking(): Boolean {
         val frame = arFragment.arSceneView.arFrame
         val wasTracking = isTracking
-        isTracking = frame.camera.trackingState == TrackingState.TRACKING
+        isTracking = frame!!.camera.trackingState == TrackingState.TRACKING
         return isTracking != wasTracking
     }
 
     private fun getScreenCenter(): Point {
         val view = findViewById<View>(android.R.id.content)
-        return Point(view.width/2, view.height/2)
+        return Point (view.width / 2, view.height/2)
     }
 
     private fun addObject(model: Uri){
