@@ -1,7 +1,9 @@
 package com.solvabit.augmentedrealitywitharcore
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.google.ar.sceneform.ux.ArFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,5 +25,15 @@ class MainActivity : AppCompatActivity() {
         floatingActionButton.setOnClickListener { addObject(Uri.parse("NOVELO_EARTH.sfb")) }
         showFab(false)
 
+    }
+
+    private fun showFab(enabled: Boolean) {
+        if (enabled) {
+            floatingActionButton.isEnabled = true
+            floatingActionButton.visibility = View.VISIBLE
+        } else {
+            floatingActionButton.isEnabled = false
+            floatingActionButton.visibility = View.GONE
+        }
     }
 }
