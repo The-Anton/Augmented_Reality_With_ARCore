@@ -119,7 +119,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    private  fun addNodeToScene(fragment: ArFragment, anchor: Anchor, renderable: ModelRenderable){
+        val anchorNode = AnchorNode(anchor)
+        val transformableNode = TransformableNode(fragment.transformationSystem)
+        transformableNode.renderable =renderable
+        transformableNode.setParent(anchorNode)
+        fragment.arSceneView.scene.onAddChild(anchorNode)
+    }
 
 
 }
