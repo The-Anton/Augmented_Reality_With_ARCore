@@ -4,10 +4,13 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.google.ar.core.HitResult
-import com.google.ar.core.Plane
-import com.google.ar.core.TrackingState
+import android.widget.Toast
+import androidx.lifecycle.ReportFragment
+import com.google.ar.core.*
+import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -79,6 +82,29 @@ class MainActivity : AppCompatActivity() {
         isTracking = frame.camera.trackingState == TrackingState.TRACKING
         return isTracking != wasTracking
     }
+
+    private fun getScreenCenter(): Point {
+        val view = findViewById<View>(android.R.id.content)
+        return Point(view.width/2, view.height/2)
+    }
+
+    private fun addObject(model: Uri){
+        val frame = arFragment.arSceneView.arFrame
+        val point = getScreenCenter()
+        if (frame!= null){
+            val hits = frame.hitTest(point.x.toFloat(), point.y.toFloat)
+            for(hit in hits){
+                val trackable = hit.trackable
+                if (trackable is Plane && trackable.isPoseInPolygon(hit.hitPose)){
+                    placeObject(arFragment, hit.createAnchor(),model)
+                    break
+                }
+            }
+        }
+
+
+    }
+
 
 
 }
